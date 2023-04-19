@@ -1,5 +1,6 @@
 import Image from "next/image";
 import ok from "../image/Group 5174.png"
+import styles from "@/styles/Popup.module.css"
 
 interface PopupProps {
     readonly onOk: () => void
@@ -7,7 +8,7 @@ interface PopupProps {
 
 export function Popup(props: PopupProps) {
     return (
-        <div>
+        <div className={styles.popup__box}>
             <Image src={ok} alt={"ok"}/>
             <div>
                 <h1>Area successfully created</h1>

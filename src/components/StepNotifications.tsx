@@ -43,8 +43,7 @@ export function StepNotifications() {
 
     return (
         <div>
-            <p>Don’t miss any event in your area of interest by activating the notifications</p>
-
+            {/*<p>Don’t miss any event in your area of interest by activating the notifications</p>*/}
             <h2>Notify me on</h2>
             <CheckBtn chekboxes={obj.notificationChannels}/>
 

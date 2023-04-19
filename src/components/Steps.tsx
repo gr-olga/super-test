@@ -1,4 +1,5 @@
 import {Step} from "@/models/Step";
+import styles from "@/styles/Steps.module.css"
 
 interface StepsProps {
     readonly steps: ReadonlyArray<Step>
@@ -7,9 +8,13 @@ interface StepsProps {
 
 export function Steps(props: StepsProps) {
     return (
-        <ul>
+        <ul className={styles.steps__box}>
             {props.steps.map((item, index)=>
-                <li key={index}>{item.title}</li>
+                <li
+                    className={styles.steps__item}
+                    key={index}>
+                    {item.title}
+                </li>
             )}
         </ul>
     )

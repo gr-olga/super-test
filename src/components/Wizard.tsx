@@ -1,5 +1,6 @@
 import {Steps} from "@/components/Steps";
 import {Step} from "@/models/Step";
+import styles from "@/styles/Wizard.module.css"
 
 interface WizardProps {
     readonly steps: ReadonlyArray<Step>
@@ -37,15 +38,29 @@ export function Wizard(props: WizardProps) {
     }
 
     return (
-        <div>
-            <div>Add Area</div>
+        <div className={styles.wizard__main}>
+            <div className={styles.wizard__header}>
+                <h1>Add area</h1>
+                <button>X</button>
+            </div>
             <Steps steps={props.steps} currentStep={props.currentStep}/>
-            <div>
+            <div className={styles.wizard__forms}>
                 {step.component()}
             </div>
-            <button type="button" onClick={prev}>Prev</button>
-            <button type="button" onClick={next}>Next</button>
-            <button type="button" onClick={submit}>Submit</button>
+            <div className={styles.wizard__btnBox}>
+                <button
+                    className={styles.wizard__backButton}
+                    type="button"
+                    onClick={prev}>
+                    Back
+                </button>
+                {props.currentStep === 3
+                    ?
+                    <button type="button" onClick={submit} className={styles.wizard__nextButton}>Done</button>
+                    :
+                    <button type="button" onClick={next} className={styles.wizard__nextButton}>Next</button>
+                }
+            </div>
         </div>
     )
 }

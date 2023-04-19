@@ -3,7 +3,12 @@ import {useState} from "react";
 import {DataApi} from "@/models/DataAPI";
 
 export function StepNotifications() {
-    const [frequency, srtFrequency] = useState(null)
+    const [frequency, srtFrequency] = useState("")
+
+    function handleChange(event) {
+        srtFrequency(event.target.value)
+    }
+
 
     const obj: DataApi = {
         "notificationChannels": {
@@ -44,13 +49,24 @@ export function StepNotifications() {
             <CheckBtn chekboxes={obj.notificationChannels}/>
 
             <h2>frequency</h2>
-            <div onChange={(e) => srtFrequency(e.target.value)}>
+            <div>
                 <label>Instant</label>
-                <input type="radio" value="Instant"/>
+                <input
+                    type="radio"
+                    value="Instant"
+                    checked={frequency === "Instant"}
+                    onChange={(e) => handleChange(e)}/>
                 <label>Daily </label>
-                <input type="radio" value="Daily"/>
+                <input
+                    type="radio"
+                    value="Daily"
+                    checked={frequency === "Daily"}
+                    onChange={(e) => handleChange(e)}/>
                 <label>Weekly</label>
-                <input type="radio" value="Weekly"/>
+                <input type="radio"
+                       value="Weekly"
+                       checked={frequency === "Weekly"}
+                       onChange={(e) => handleChange(e)}/>
             </div>
             <p>You’ll be notified as soon as an event happens.</p>
 

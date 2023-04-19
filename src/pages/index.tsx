@@ -59,8 +59,13 @@ export default function Home() {
             </Head>
             <div>
                 {!isFinished ?
-                    < Wizard steps={steps} currentStep={step} onNext={onStepChange} onPrev={onStepChange} url={url}
-                             onSubmit={onSubmit}/> : <Popup onOk={reset}/>
+                    < Wizard
+                        steps={steps}
+                        currentStep={step}
+                        onNext={onStepChange}
+                        onPrev={onStepChange}
+                        url={url}
+                        onSubmit={onSubmit}/> : <Popup onOk={reset}/>
                 }
             </div>
         </>

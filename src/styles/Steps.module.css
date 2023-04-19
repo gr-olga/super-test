@@ -1,0 +1,15 @@
+.steps__box {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 0;
+}
+
+.steps__item {
+    list-style: none;
+    border: 1px solid #464545;
+    border-radius: 10%;
+    margin: 10px;
+}

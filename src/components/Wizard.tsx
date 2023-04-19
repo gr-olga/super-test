@@ -1,83 +1,52 @@
 import {Steps} from "@/components/Steps";
-import {CheckBtn} from "@/components/CheckBtn";
-import {DataApi} from "@/models/DataAPI";
-import {Popup} from "@/components/Popup";
-import {useState} from "react";
+import {Step} from "@/models/Step";
 
-export function Wizard() {
-    const obj: DataApi = {
-        "notificationChannels": {
-            "email": {
-                "enabled": true,
-                "label": "Email"
-            },
-            "iq": {
-                "enabled": true,
-                "label": "SYT iQ Notification"
-            },
-            "slack": {
-                "enabled": true,
-                "label": "Slack Message"
-            },
-            "push": {
-                "enabled": true,
-                "label": "Mobile App Push Notification"
-            },
-            "sms": {
-                "enabled": false,
-                "label": "SMS text message"
-            }
-        },
-        "notificationFrequencies": [
-            "immediate", "daily", "weekly", "monthly"
-        ],
-        "eventTypes": [
-            "yacht entered", "yacht left", "yacht crossed", "yacht entered and stayed"
-        ]
+interface WizardProps {
+    readonly steps: ReadonlyArray<Step>
+    readonly currentStep: number
+    readonly url: string
+    readonly onPrev: (currentStep: number) => void
+    readonly onNext: (currentStep: number) => void
+    readonly onSubmit: () => void
+}
+
+export function Wizard(props: WizardProps) {
+    const step: Step = props.steps[props.currentStep];
+
+    function prev() {
+        const prevStep: Step = props.steps[props.currentStep - 1]
+        if (!prevStep || prevStep.isPrefilled) return
+        props.onPrev(props.currentStep - 1)
     }
 
-    const [frequency, srtFrequency] = useState(null)
+    function next() {
+        const nextStep: Step = props.steps[props.currentStep + 1]
+        if (!nextStep) return
+        props.onNext(props.currentStep + 1)
+    }
+
+    function submit(): Promise<void> {
+        return fetch(props.url, {
+            method: "POST",
+            mode: "no-cors",
+            headers: {
+                "Content-Type": "application/json",
+            }
+        })
+            .then(props.onSubmit)
+            .catch(() => console.log('Sending failed'))
+    }
 
     return (
         <div>
-            <Steps/>
-            <form>
-                <label>Title</label>
-                <input type="text"/>
-                <label>Notes(optional)</label>
-                <textarea/>
-            </form>
-            <p>Don’t miss any event in your area of interest by activating the notifications</p>
-
-            <h2>Notify me on</h2>
-            <CheckBtn chekboxes={obj.notificationChannels}/>
-
-            <h2>frequency</h2>
-            <div onChange={(e) => srtFrequency(e.target.value)}>
-                <label>Instant</label>
-                <input type="radio" value="Instant"/>
-                <label>Daily </label>
-                <input type="radio" value="Daily"/>
-                <label>Weekly</label>
-                <input type="radio" value="Weekly"/>
-            </div>
-            <p>You’ll be notified as soon as an event happens.</p>
-
-            <h2>Type of event</h2>
-            <form>
-                {obj.eventTypes.map((item, index) =>
-                    <div key={index}>
-                        <label>{item}</label>
-                        <input type="checkbox" value="false"/>
-                    </div>
-                )}
-            </form>
-
+            <div>Add Area</div>
+            <Steps steps={props.steps} currentSte={props.currentStep}/>
             <div>
-                <button>Back</button>
-                <button>Next</button>
+                {step.component()}
             </div>
-            <Popup/>
+            <button type="button" onClick={prev}>Prev</button>
+            <button type="button" onClick={next}>Next</button>
+            <button type="button" onClick={submit}>Submit</button>
         </div>
     )
 }

@@ -1,10 +1,16 @@
-export function Steps() {
+import {Step} from "@/models/Step";
+
+interface StepsProps {
+    readonly steps: ReadonlyArray<Step>
+    readonly currentStep: number
+}
+
+export function Steps(props: StepsProps) {
     return (
         <ul>
-            <li>1 Geofence</li>
-            <li>2 Filters</li>
-            <li>3 Title</li>
-            <li>4 Notifications</li>
+            {props.steps.map((item, index)=>
+                <li key={index}>{item.title}</li>
+            )}
         </ul>
     )
 }

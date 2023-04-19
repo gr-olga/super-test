@@ -6,6 +6,8 @@ import {Step} from "@/models/Step";
 import {StepMock} from "@/components/StepMock";
 import {StepTitle} from "@/components/StepTitle";
 import {StepNotifications} from "@/components/StepNotifications";
+import {Popup} from "@/components/Popup";
+
 const inter = Inter({subsets: ['latin']})
 
 export default function Home() {
@@ -56,10 +58,10 @@ export default function Home() {
                 <meta name="viewport" content="width=device-width, initial-scale=1"/>
             </Head>
             <div>
-                {/*isFinished === false*/}
-                <Wizard steps={steps} currentStep={step} onNext={onStepChange} onPrev={onStepChange} url={url} onSubmit={onSubmit} />
-                {/*isFinished === trie*/}
-                {/*<Popup title="AAA" description="BBB" onOk={reset}></Popup>*/}
+                {!isFinished ?
+                    < Wizard steps={steps} currentStep={step} onNext={onStepChange} onPrev={onStepChange} url={url}
+                             onSubmit={onSubmit}/> : <Popup onOk={reset}/>
+                }
             </div>
         </>
     )

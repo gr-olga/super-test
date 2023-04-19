@@ -28,7 +28,6 @@ export function Wizard(props: WizardProps) {
     function submit(): Promise<void> {
         return fetch(props.url, {
             method: "POST",
-            mode: "no-cors",
             headers: {
                 "Content-Type": "application/json",
             }
@@ -40,7 +39,7 @@ export function Wizard(props: WizardProps) {
     return (
         <div>
             <div>Add Area</div>
-            <Steps steps={props.steps} currentSte={props.currentStep}/>
+            <Steps steps={props.steps} currentStep={props.currentStep}/>
             <div>
                 {step.component()}
             </div>
